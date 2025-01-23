@@ -1,3 +1,3 @@
 module github.com/patrick246/go-pixelflut
 
-go 1.14
+go 1.22

@@ -91,9 +91,9 @@ func (p *PixelflutClient) SetPixelString(x, y int, color string) error {
 }
 
 func (p *PixelflutClient) WriteFromChannel(commandChannel <-chan WriteCommand) {
-	writer := bufio.NewWriterSize(p.conn, 16*1024)
+	writer := bufio.NewWriterSize(p.conn, 64*1024)
 	for cmd := range commandChannel {
-		_, err := writer.Write([]byte(fmt.Sprintf("PX %d %d %s\n", cmd.X, cmd.Y, cmd.Color.ToString())))
+		_, err := fmt.Fprintf(writer, "PX %d %d %s\n", cmd.X, cmd.Y, cmd.Color.ToString())
 		if err != nil {
 			fmt.Printf("error sending command: %v\n", err)
 		}
